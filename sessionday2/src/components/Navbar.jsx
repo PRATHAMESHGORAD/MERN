@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="collapsibleNavId">
             <ul className="navbar-nav me-auto mt-2 mt-lg-0">
                 <li className="nav-item">
-                    <NavLink className="nav-link active" to="Home" aria-current="page">
+                    <NavLink className="nav-link active" to="/" aria-current="page">
                         Home <span className="visually-hidden">(current)</span></NavLink>
                 </li>
                 <li className="nav-item">
