@@ -1,5 +1,6 @@
 const bcryptjs = require('bcryptjs');
 const userModel = require('../model/usermodel');
+const blogModel = require('../model/blogmodel');
 
 const register = async(req,resp)=>{
     try {
@@ -34,7 +35,8 @@ const dashboard = async(req,resp)=>{
     if (!req.session.uname) {
         resp.redirect("/login")
     } else {
-        resp.render("dashboard",{uname:req.session.uname})
+        const blogs = await blogModel.find()
+        resp.render("dashboard",{uname:req.session.uname,blogs})
     }
 }
 

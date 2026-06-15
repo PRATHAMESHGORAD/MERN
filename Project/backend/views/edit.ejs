@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>edit blog</h1>
+        <form action="/updateblog/<%= data._id %>?_method=put" method="post">
+            title:
+            <input type="text" name="title" value="<%= data.title %>"><br><br>
+            image:
+            <input type="text" name="image" value="<%= data.image %>"><br><br>
+            desp:
+            <input type="text" name="desp" value="<%= data.desp %>"><br><br>
+            <button type="submit">submit</button>
+        </form>
+    </center>
+</body>
+</html>

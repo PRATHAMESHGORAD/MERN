@@ -51,4 +51,4 @@ const editformblog = async(req,resp)=>{
     }
 }
 
-module.exports = {addblog,showblog,deleteblog}
+module.exports = {addblog,showblog,deleteblog,updateblog,editformblog}

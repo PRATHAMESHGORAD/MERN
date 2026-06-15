@@ -6,13 +6,13 @@ const blogSchema = mongoose.Schema({
         required:true
     },
     image:{
-        type:Image,
+        type:String,
         required:true
     },
     desp:{
         type:String,
         required:true
-    },
+    }
     
 },{timestamps:true})
 
