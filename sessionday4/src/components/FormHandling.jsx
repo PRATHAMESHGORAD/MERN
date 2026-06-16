@@ -51,7 +51,7 @@ const FormHandling = () => {
                                 type="submit"
                                 class="btn btn-primary"
                             >
-                                Login
+                                login
                             </button>
                             
                         </form>
