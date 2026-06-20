@@ -1,13 +1,13 @@
 import React, { useEffect, useState, } from 'react'
 import axios from 'axios'
-import {NavLink,useNavigate } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 
 const Home = () => {
 
     const [hotels,setHotels] = useState([])
    
-    const navigate = useNavigate()
+    
     useEffect(()=>{
         axios.get('http://localhost:2000/hotel/showhotels')
         .then((res)=>setHotels(res.data))
@@ -17,8 +17,9 @@ const Home = () => {
 
     const handledel = (e,id) =>{
         e.preventDefault()
-        axios.delete(`http://localhost:2000/hotel/deleteHotel/${id}`,hotels)
-        .then((res)=>navigate('/'))
+        axios.delete(`http://localhost:2000/hotel/deleteHotel/${id}`)
+        .then((res)=> {axios.get('http://localhost:2000/hotel/showhotels')
+        .then((res)=>setHotels(res.data))})
         .catch((err)=>console.log(err));
     }
   return (

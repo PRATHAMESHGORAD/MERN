@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {useNavigate,useParams,} from 'react-router-dom'
+import {useNavigate,useParams} from 'react-router-dom'
 import axios from 'axios'
 
 const Edit = () => {
@@ -7,7 +7,7 @@ const Edit = () => {
     const navigate = useNavigate()
     const {id} = useParams()
     useEffect(()=>{
-        axios.get(`http://localhost:2000/hotel/showhotels`)
+        axios.get(`http://localhost:2000/hotel/showHotel/${id}`)
         .then((res)=>setHotel(res.data))
         .catch((err)=>console.log(err));
         
