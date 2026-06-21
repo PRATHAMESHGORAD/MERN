@@ -26,7 +26,7 @@ exports.showBlog = async(req,resp)=>{
 }
 
 exports.updateBlog = async(req,resp)=>{
-    const blog = await blogModel.findByIdUpdate(req.params.id,req.body)
+    const blog = await blogModel.findByIdAndUpdate(req.params.id,req.body)
     if ( blog != null) {
         resp.status(200).json({message: ' updated'})
     } else {
@@ -35,7 +35,7 @@ exports.updateBlog = async(req,resp)=>{
 }
 
 exports.deleteBlog = async(req,resp)=>{
-    const blog = await blogModel.findByIdDelete(req.params.id)
+    const blog = await blogModel.findByIdAndDelete(req.params.id)
     if ( blog != null) {
         resp.status(200).json({message: ' deleted'})
     } else {
