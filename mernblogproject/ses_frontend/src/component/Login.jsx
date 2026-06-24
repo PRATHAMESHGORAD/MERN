@@ -16,10 +16,19 @@ const Login = () => {
         e.preventDefault()
 
         axios.post('http://localhost:2000/user/login', user)
-            .then((res) => {
-                alert("Login Successful")
-                navigate('/')
-            })
+            .then((res)=>{
+
+ localStorage.setItem(
+
+   "token",
+
+   res.data.token
+
+ );
+
+ navigate("/");
+
+})
             .catch((err) => {
                 console.log(err)
                 alert("Login Failed")
