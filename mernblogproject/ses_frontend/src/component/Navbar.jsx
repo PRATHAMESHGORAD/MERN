@@ -1,44 +1,59 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import axios from 'axios'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
-  return (
-    <>
-    <nav
-        className="navbar navbar-expand-sm navbar-dark bg-dark"
-    >
-        <div
-            className="container"
-        >
-            <NavLink className="navbar-brand" to="/">Blog app</NavLink>
-        <button
-            className="navbar-toggler d-lg-none"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapsibleNavId"
-            aria-controls="collapsibleNavId"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        ></button>
-        <div className="collapse navbar-collapse" id="collapsibleNavId">
-            <ul className="navbar-nav me-auto mt-2 mt-lg-0">
-                <li className="nav-item">
-                    <NavLink className="nav-link active" to="/" aria-current="page"
-                        >Home <span className="visually-hidden">(current)</span></NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to="/add">add blog</NavLink>
-                </li>
-                
-            </ul>
-            
-        </div>
-        </div>
-        
-    </nav>
-    
-    </>
-  )
+
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+
+        axios.get('http://localhost:2000/user/logout')
+            .then(() => {
+                alert("Logged Out")
+                navigate('/login')
+            })
+            .catch((err) => console.log(err))
+    }
+
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container">
+
+                <NavLink
+                    className="navbar-brand"
+                    to="/"
+                >
+                    Blog App
+                </NavLink>
+
+                <div>
+
+                    <NavLink
+                        className="btn btn-primary me-2"
+                        to="/login"
+                    >
+                        Login
+                    </NavLink>
+
+                    <NavLink
+                        className="btn btn-success me-2"
+                        to="/register"
+                    >
+                        Register
+                    </NavLink>
+
+                    <button
+                        className="btn btn-danger"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+        </nav>
+    )
 }
 
 export default Navbar

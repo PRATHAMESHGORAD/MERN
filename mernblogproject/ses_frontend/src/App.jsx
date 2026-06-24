@@ -6,6 +6,8 @@ import Add from './component/Add'
 import Show from './component/Show'
 import Edit from './component/Edit'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Register from './component/Register'
+import Login from './component/Login'
 
 
 const App = () => {
@@ -18,6 +20,8 @@ const App = () => {
       <Route path='/add' element={<Add/>}/>
       <Route path='/:id' element={<Show/>}/>
       <Route path='/edit/:id' element={<Edit/>}/>
+      <Route path='/register' element={<Register/>}/>
+      <Route path='/login' element={<Login/>}/>
     </Routes>
     </BrowserRouter>
     </>

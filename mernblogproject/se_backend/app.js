@@ -1,18 +1,32 @@
 const express = require('express');
-const {connectDB} = require('./db');
-const router = require('./routes/blogroute')
 const cors = require('cors');
+const session = require('express-session');
 
-const app = express()
-connectDB()
-app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+const { connectDB } = require('./db');
 
+const blogRouter = require('./routes/blogroute');
+const userRouter = require('./routes/userroute');
 
-app.use('/blog',router)
+const app = express();
 
-app.listen(2000,()=>{
-    console.log("runnig");
-    
-})
+connectDB();
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: "blogapp",
+    resave: false,
+    saveUninitialized: false
+}));
+
+// User Routes
+app.use('/user', userRouter);
+
+// Blog Routes
+app.use('/blog', blogRouter);
+
+app.listen(2000, () => {
+    console.log("running");
+});
