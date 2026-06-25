@@ -1,53 +1,15 @@
+const auth = (req,res,next)=>{
 
-const jwt =
-require(
- "jsonwebtoken"
-);
+    if(!req.session.userId){
 
-const auth=(
+        return res.status(401).json({
+            message:"Please Login First"
+        });
 
- req,
- res,
- next
+    }
 
-)=>{
+    next();
 
- const token =
+}
 
- req.headers.authorization
- ?.split(" ")[1];
-
- if(!token){
-
-   return res.status(401);
-
- }
-
- try{
-
-   const decoded =
-   jwt.verify(
-
-     token,
-
-     "secret123"
-
-   );
-
-   req.user =
-   decoded;
-
-   next();
-
- }
- catch{
-
-   return res.status(401);
-
- }
-
-};
-
-module.exports =
-auth;
-
+module.exports = auth;

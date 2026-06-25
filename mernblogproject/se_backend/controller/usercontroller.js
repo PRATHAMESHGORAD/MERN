@@ -44,11 +44,12 @@ exports.login = async (req, res) => {
         if (
             user &&
             await bcryptjs.compare(password, user.password)
-        ) {
-            return res.status(200).json({
-                message: "Login Successful"
-            });
-        }
+        ) req.session.userId = user._id;
+req.session.role = user.role;
+
+return res.status(200).json({
+    message:"Login Successful"
+});
 
         res.status(401).json({
             message: "Invalid Credentials"

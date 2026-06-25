@@ -1,105 +1,187 @@
-const blogModel = require("../model/blogmodel")
+const blogModel = require("../model/blogmodel");
 
-exports.addBlog = async(req,resp)=>{
-   const new_blog = new blogModel({
+// =====================
+// Add Blog
+// =====================
+exports.addBlog = async (req, res) => {
 
-    ...req.body,
+    try {
 
-    user:req.session.userId
+        const newBlog = new blogModel({
 
-})
-    const result = await new_blog.save()
-    resp.status(200).json(result)
+            title: req.body.title,
+            content: req.body.content,
+            imageUrl: req.body.imageUrl,
+            author: req.body.author,
 
-}
+            // Logged in user becomes owner
+            user: req.session.userId
 
-exports.showblogs = async(req,resp)=>{
-    const blogs = await blogModel.find()
-    if (blogs != null) {
-        resp.status(200).json(blogs)
-    } else {
-        resp.status(404).json({message : 'no blogs'})
-    }
-}
+        });
 
-exports.showBlog = async (req,resp)=>{
-    const blog = await blogModel.findById(req.params.id)
-    if (blog != null) {
-        resp.status(200).json(blog)
-    } else {
-        resp.status(404).json({message: 'not record found'})
-    }
-}
+        const result = await newBlog.save();
 
-exports.updateBlog = async(req,res)=>{
+        res.status(201).json(result);
 
-    const blog =
-    await blogModel.findById(
-        req.params.id
-    );
+    } catch (error) {
 
-    if(
+        console.log(error);
 
-        blog.user.toString()
-
-        !==
-
-        req.session.userId
-
-    ){
-
-        return res.status(403)
-        .json({
-            message:"Access Denied"
+        res.status(500).json({
+            message: "Unable to create blog"
         });
 
     }
 
-    await blogModel.findByIdAndUpdate(
-        req.params.id,
-        req.body
-    );
+};
 
-    res.status(200)
-    .json({
-        message:"Updated"
-    });
 
-}
+// =====================
+// Show All Blogs
+// =====================
+exports.showblogs = async (req, res) => {
 
-exports.deleteBlog = async(req,res)=>{
+    try {
 
-    const blog =
-    await blogModel.findById(
-        req.params.id
-    );
+        const blogs = await blogModel.find();
 
-    if(
+        res.status(200).json(blogs);
 
-        blog.user.toString()
+    } catch (error) {
 
-        !==
+        console.log(error);
 
-        req.session.userId
-
-    ){
-
-        return res.status(403)
-        .json({
-            message:"Access Denied"
+        res.status(500).json({
+            message: "Unable to fetch blogs"
         });
 
     }
 
-    await blogModel.findByIdAndDelete(
-        req.params.id
-    );
-
-    res.status(200)
-    .json({
-        message:"Deleted"
-    });
-
-}
+};
 
 
+// =====================
+// Show Single Blog
+// =====================
+exports.showBlog = async (req, res) => {
+
+    try {
+
+        const blog = await blogModel.findById(req.params.id);
+
+        if (!blog) {
+
+            return res.status(404).json({
+                message: "Blog not found"
+            });
+
+        }
+
+        res.status(200).json(blog);
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Server Error"
+        });
+
+    }
+
+};
+
+
+// =====================
+// Update Blog
+// =====================
+exports.updateBlog = async (req, res) => {
+
+    try {
+
+        const blog = await blogModel.findById(req.params.id);
+
+        if (!blog) {
+
+            return res.status(404).json({
+                message: "Blog not found"
+            });
+
+        }
+
+        // Owner Check
+        if (blog.user.toString() !== req.session.userId) {
+
+            return res.status(403).json({
+                message: "Access Denied"
+            });
+
+        }
+
+        blog.title = req.body.title;
+        blog.content = req.body.content;
+        blog.imageUrl = req.body.imageUrl;
+        blog.author = req.body.author;
+
+        await blog.save();
+
+        res.status(200).json({
+            message: "Blog Updated Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Update Failed"
+        });
+
+    }
+
+};
+
+
+// =====================
+// Delete Blog
+// =====================
+exports.deleteBlog = async (req, res) => {
+
+    try {
+
+        const blog = await blogModel.findById(req.params.id);
+
+        if (!blog) {
+
+            return res.status(404).json({
+                message: "Blog not found"
+            });
+
+        }
+
+        // Owner Check
+        if (blog.user.toString() !== req.session.userId) {
+
+            return res.status(403).json({
+                message: "Access Denied"
+            });
+
+        }
+
+        await blogModel.findByIdAndDelete(req.params.id);
+
+        res.status(200).json({
+            message: "Blog Deleted Successfully"
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            message: "Delete Failed"
+        });
+
+    }
+
+};

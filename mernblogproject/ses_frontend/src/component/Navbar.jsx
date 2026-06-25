@@ -25,6 +25,12 @@ const Navbar = () => {
                 >
                     Blog App
                 </NavLink>
+                <NavLink
+                        className="btn btn-primary me-2"
+                        to="/add"
+                    >
+                        addblog
+                    </NavLink>
 
                 <div>
 
