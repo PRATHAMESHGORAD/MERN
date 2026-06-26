@@ -1,6 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
+const http = require('http');
+
+const {intializeSocket} = require('./socket');
+
+
+
+
 
 const { connectDB } = require('./db');
 
@@ -11,7 +18,10 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,6 +37,13 @@ app.use('/user', userRouter);
 // Blog Routes
 app.use('/blog', blogRouter);
 
-app.listen(2000, () => {
-    console.log("running");
+
+//create http server
+const server = http.createServer(app);//it attaches to http server that is why we create
+
+
+
+intializeSocket(server)
+server.listen(2000, () => {
+    console.log(" server running");
 });

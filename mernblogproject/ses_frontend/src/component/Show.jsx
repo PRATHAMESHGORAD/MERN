@@ -9,14 +9,15 @@ const Show = () => {
     const [blog,setBlog] = useState({})
 const navigate = useNavigate()
     useEffect (()=>{
-        axios.get(`http://localhost:2000/blog/showblog/${id}`)
+        axios.get(`http://localhost:2000/blog/${id}`)
         .then((res)=>setBlog(res.data))
         .catch((err)=>console.log(err));
         
     })
 
-    const handledelete= ()=>{
-        axios.delete(`http://localhost:2000/blog/deleteblog/${id}`)
+    const handeldelete= (e)=>{
+        e.preventDefault()
+        axios.delete(`http://localhost:2000/blog/deleteBlog/${id}`,blog)
         .then((res)=>navigate('/'))
         .catch((err)=>console.log(err));
     
@@ -55,9 +56,9 @@ const navigate = useNavigate()
                         >edit</NavLink>
 
                     <button
-                        type="button"
+                        type="submit"
                         className="btn btn-danger"
-                        onClick={handledelete}
+                        onClick={handeldelete}
                     >
                         delete
                     </button>

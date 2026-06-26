@@ -1,4 +1,5 @@
 const blogModel = require("../model/blogmodel");
+const {getIO} = require('../socket');//Because this controller needs access to the Socket.io server.
 
 // =====================
 // Add Blog
@@ -20,13 +21,17 @@ exports.addBlog = async (req, res) => {
         });
 
         const result = await newBlog.save();
+        const io = getIO();
+
+        io.emit("newBlog",result)//Sends to every connected client.
 
         res.status(201).json(result);
 
     } catch (error) {
 
         console.log(error);
-
+         console.log(error.message);
+          console.log(error.stack);
         res.status(500).json({
             message: "Unable to create blog"
         });
@@ -147,41 +152,12 @@ exports.updateBlog = async (req, res) => {
 // =====================
 exports.deleteBlog = async (req, res) => {
 
-    try {
-
-        const blog = await blogModel.findById(req.params.id);
-
-        if (!blog) {
-
-            return res.status(404).json({
-                message: "Blog not found"
-            });
-
-        }
-
-        // Owner Check
-        if (blog.user.toString() !== req.session.userId) {
-
-            return res.status(403).json({
-                message: "Access Denied"
-            });
-
-        }
-
-        await blogModel.findByIdAndDelete(req.params.id);
-
-        res.status(200).json({
-            message: "Blog Deleted Successfully"
-        });
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(500).json({
-            message: "Delete Failed"
-        });
-
+    const blog = await blogModel.findByIdAndDelete(req.params.id,req.body)
+    if ( blog != null){
+        res.status(200).json({message: "deleted"})
+    }
+    else{
+        res.status(404).json({message: "not deleted"})
     }
 
 };

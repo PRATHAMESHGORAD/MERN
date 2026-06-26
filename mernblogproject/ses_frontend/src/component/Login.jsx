@@ -15,7 +15,9 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        axios.post('http://localhost:2000/user/login', user)
+        axios.post('http://localhost:2000/user/login', user,{
+            withCredentials:true
+        })
             .then((res)=>{
 
  localStorage.setItem(

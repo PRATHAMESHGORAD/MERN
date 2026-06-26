@@ -9,9 +9,19 @@ const Add = () => {
     const navigate = useNavigate()
     const handleSubmit = (e)=>{
         e.preventDefault()
-        axios.post('http://localhost:2000/blog/add',blog)
-        .then(()=>navigate('/'))
-        .catch((err)=>console.log(err));
+        console.log(blog);
+        
+        axios.post('http://localhost:2000/blog/add',blog,{
+            withCredentials:true
+        })
+        .then((res)=>{ console.log(res.data);
+              navigate('/')})
+        .catch((err)=>{console.log(err.response)
+            console.log(err.response?.data);
+            console.log(err.response?.status);
+            
+            
+        });
         
     }
 

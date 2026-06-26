@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import socket from "../socket"
 
 const Home = () => {
 
@@ -12,8 +13,33 @@ const Home = () => {
         axios.get('http://localhost:2000/blog')
         .then((res) =>setBlogs (res.data))
         .catch((err) =>console.log(err))
+
         
+       
     },[])
+    useEffect(()=>{
+            socket.on("connect",()=>{
+                console.log("connected");
+            })
+            socket.on("newBlog",(blog)=>{
+                setBlogs((previousBlogs)=>[
+                    blog,...previousBlogs
+                ])
+                
+            })
+            socket.emit("hello",
+                {
+                    name:"pratham",
+                    age:22,
+                    course:"mern"
+                }
+            ); //sends data
+            return ()=>{
+                socket.off("new blog")
+                socket.off("connect")
+                
+            }
+        },[])
   return (
     <>
     <div
@@ -25,7 +51,7 @@ const Home = () => {
             <div className="col">
                 {
                     blogs.map((blog)=>(
-                        <div className="card ">
+                        <div className="card " key={blog._id}>
                             <img className="card-img-top" src={blog.imageUrl} alt="Title" />
                             <div className="card-body">
                                 <h4 className="card-title">{blog.title}</h4>
