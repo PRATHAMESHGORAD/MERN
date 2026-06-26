@@ -23,7 +23,7 @@ exports.addBlog = async (req, res) => {
         const result = await newBlog.save();
         const io = getIO();
 
-        io.emit("newBlog",result)//Sends to every connected client.
+        io.to("technology").emit("newBlog",result)//Sends to every connected client.
 
         res.status(201).json(result);
 

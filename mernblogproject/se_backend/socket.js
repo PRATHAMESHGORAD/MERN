@@ -11,8 +11,14 @@ const intializeSocket = (server) => {
 
     io.on("connection", (socket) => {
         console.log("client connected");
-        socket.on("disconnect",()=>{
-            console.log("client disconnected");
+        socket.on("joinRoom",(roomName)=>{
+            socket.join(roomName);
+            console.log(`${socket.id} joined ${roomName}`);
+            
+        })
+        socket.on("leaveRoom",(room)=>{
+            socket.leave(room);
+            console.log(`${socket.id} left ${room}`);
             
         })
         

@@ -8,6 +8,7 @@ import socket from "../socket"
 const Home = () => {
 
     const[blogs,setBlogs]= useState([])
+    const [room,setRoom] = useState("technology");
 
     useEffect(()=>{
         axios.get('http://localhost:2000/blog')
@@ -34,6 +35,8 @@ const Home = () => {
                     course:"mern"
                 }
             ); //sends data
+              socket.emit("joinRoom", room);
+              socket.emit("leaveRoom", room);
             return ()=>{
                 socket.off("new blog")
                 socket.off("connect")
@@ -48,6 +51,11 @@ const Home = () => {
         <div
             className="row justify-content-center align-items-center g-2"
         >
+            <select value={room} onChange={(e)=>setRoom(e.target.value)}>
+                    <option value="technology">teachnology</option>
+                    <option value="sports">sports</option>
+                    <option value="space">space</option>
+                </select>
             <div className="col">
                 {
                     blogs.map((blog)=>(
