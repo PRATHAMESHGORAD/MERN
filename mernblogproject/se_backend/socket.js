@@ -1,6 +1,8 @@
+
+    const {Server} = require("socket.io");
+
 let io;
 const intializeSocket = (server) => {
-    const {Server} = require("socket.io");
 
     io = new Server(server,{
         cors:{
@@ -16,12 +18,33 @@ const intializeSocket = (server) => {
             console.log(`${socket.id} joined ${roomName}`);
             
         })
+        socket.on("joinBlog",(blogId)=>{
+
+    socket.join(blogId);
+
+    console.log(
+        `${socket.id} joined blog ${blogId}`
+    );
+
+});
+socket.on("leaveBlog",(blogId)=>{
+
+    socket.leave(blogId);
+
+    console.log(
+
+        `${socket.id} left blog ${blogId}`
+
+    );
+
+});
         socket.on("leaveRoom",(room)=>{
             socket.leave(room);
             console.log(`${socket.id} left ${room}`);
             
         })
-        
+       
+
     })
 }
 

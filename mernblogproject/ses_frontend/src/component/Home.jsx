@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ const Home = () => {
 
     const[blogs,setBlogs]= useState([])
     const [room,setRoom] = useState("technology");
+    const previousRoom = useRef(room)
 
     useEffect(()=>{
         axios.get('http://localhost:2000/blog')
@@ -37,12 +38,13 @@ const Home = () => {
             ); //sends data
               socket.emit("joinRoom", room);
               socket.emit("leaveRoom", room);
+              previousRoom.current = room;
             return ()=>{
                 socket.off("new blog")
                 socket.off("connect")
                 
             }
-        },[])
+        },[room])
   return (
     <>
     <div

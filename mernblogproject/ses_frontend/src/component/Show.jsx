@@ -3,17 +3,25 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import socket from '../socket'
+import CommentBox from './CommentBox'
 
 const Show = () => {
     const {id} = useParams()
     const [blog,setBlog] = useState({})
 const navigate = useNavigate()
     useEffect (()=>{
-        axios.get(`http://localhost:2000/blog/${id}`)
+        axios.get(`http://localhost:2000/blog/showBlog/${id}`)
         .then((res)=>setBlog(res.data))
         .catch((err)=>console.log(err));
         
-    })
+    },[id])
+
+    useEffect(()=>{
+        socket.emit("joinBlog",id);
+        console.log("joinedBlog",id);
+    },[id]);
+   
 
     const handeldelete= (e)=>{
         e.preventDefault()
@@ -37,7 +45,7 @@ const navigate = useNavigate()
                     <h4 className="card-title">{blog.title}</h4>
                     <p className="card-text">{blog.content}</p>
                     <h4 className="text-secondary">author:{blog.author}</h4>
-
+                        <CommentBox blogId={id}/>
                     <NavLink
                         name=""
                         id=""
@@ -62,7 +70,7 @@ const navigate = useNavigate()
                     >
                         delete
                     </button>
-                    
+                
 
 
                     

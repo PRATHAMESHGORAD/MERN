@@ -13,6 +13,7 @@ const { connectDB } = require('./db');
 
 const blogRouter = require('./routes/blogroute');
 const userRouter = require('./routes/userroute');
+const commentRouter = require('./routes/commentroute')
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.use('/user', userRouter);
 
 // Blog Routes
 app.use('/blog', blogRouter);
+
+app.use('/comment',commentRouter)
 
 
 //create http server
