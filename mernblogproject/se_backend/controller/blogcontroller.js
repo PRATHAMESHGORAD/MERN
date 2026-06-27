@@ -1,6 +1,6 @@
 const blogModel = require("../model/blogmodel");
 const {getIO} = require('../socket');//Because this controller needs access to the Socket.io server.
-
+let blogCache = null;
 // =====================
 // Add Blog
 // =====================
@@ -21,6 +21,8 @@ exports.addBlog = async (req, res) => {
         });
 
         const result = await newBlog.save();
+        //clear cache
+        blogCache = null;
         const io = getIO();
 
         io.to("technology").emit("newBlog",result)//Sends to every connected client.
@@ -44,26 +46,25 @@ exports.addBlog = async (req, res) => {
 // =====================
 // Show All Blogs
 // =====================
-exports.showblogs = async (req, res) => {
-
+exports.showblogs = async(req,res)=>{
     try {
-
+        if(blogCache){
+            console.log("data from local cache");
+            return res.status(200).json(blogCache)
+            
+        }
+        console.log("data from mongodb");
         const blogs = await blogModel.find();
-
-        res.status(200).json(blogs);
-
+        //ssave in memory
+        blogCache = blogs;
+        res.status(200).json(blogs)
+        
     } catch (error) {
-
         console.log(error);
-
-        res.status(500).json({
-            message: "Unable to fetch blogs"
-        });
-
+        res.status(500).json({message: "unable to fetch blogs"})
+        
     }
-
-};
-
+}
 
 // =====================
 // Show Single Blog
@@ -129,7 +130,7 @@ exports.updateBlog = async (req, res) => {
         blog.author = req.body.author;
 
         await blog.save();
-
+        blogCache = null;
         res.status(200).json({
             message: "Blog Updated Successfully"
         });
@@ -150,14 +151,36 @@ exports.updateBlog = async (req, res) => {
 // =====================
 // Delete Blog
 // =====================
-exports.deleteBlog = async (req, res) => {
+exports.deleteBlog = async(req,res)=>{
 
-    const blog = await blogModel.findByIdAndDelete(req.params.id,req.body)
-    if ( blog != null){
-        res.status(200).json({message: "deleted"})
-    }
-    else{
-        res.status(404).json({message: "not deleted"})
+    try{
+
+        const blog = await blogModel.findByIdAndDelete(req.params.id);
+
+        blogCache = null;
+
+        if(blog){
+
+            return res.status(200).json({
+                message:"Deleted"
+            });
+
+        }
+
+        res.status(404).json({
+            message:"Blog Not Found"
+        });
+
     }
 
-};
+    catch(error){
+
+        console.log(error);
+
+        res.status(500).json({
+            message:"Delete Failed"
+        });
+
+    }
+
+}
