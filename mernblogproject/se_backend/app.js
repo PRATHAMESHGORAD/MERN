@@ -4,7 +4,7 @@ const session = require('express-session');
 const http = require('http');
 
 const {intializeSocket} = require('./socket');
-
+const redisClient = require("./redis")
 
 
 

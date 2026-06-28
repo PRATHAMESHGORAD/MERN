@@ -1,9 +1,7 @@
 const blogModel = require("../model/blogmodel");
 const {getIO} = require('../socket');//Because this controller needs access to the Socket.io server.
-let blogCache = null;
-// =====================
-// Add Blog
-// =====================
+const redisClient = require("../redis")
+
 exports.addBlog = async (req, res) => {
 
     try {
@@ -21,8 +19,9 @@ exports.addBlog = async (req, res) => {
         });
 
         const result = await newBlog.save();
+        redisClient.del("blogs")
         //clear cache
-        blogCache = null;
+       
         const io = getIO();
 
         io.to("technology").emit("newBlog",result)//Sends to every connected client.
@@ -43,21 +42,27 @@ exports.addBlog = async (req, res) => {
 };
 
 
-// =====================
-// Show All Blogs
-// =====================
+
 exports.showblogs = async(req,res)=>{
     try {
-        if(blogCache){
-            console.log("data from local cache");
-            return res.status(200).json(blogCache)
+        redisClient.get("blogs",async(err,data)=>{
+            if(err){
+                console.log(err);
+                
+            }
+            //cache hit
+        if(data){
+            console.log("data from redis");
+            return res.status(200).json(JSON.parse(data))//parse: [{...},{...}]
             
         }
         console.log("data from mongodb");
         const blogs = await blogModel.find();
-        //ssave in memory
-        blogCache = blogs;
+        //ssave into redis
+        redisClient.set("blogs",JSON.stringify(blogs),"EX",60)
         res.status(200).json(blogs)
+        })
+        
         
     } catch (error) {
         console.log(error);
@@ -66,11 +71,20 @@ exports.showblogs = async(req,res)=>{
     }
 }
 
-// =====================
-// Show Single Blog
-// =====================
-exports.showBlog = async (req, res) => {
 
+exports.showBlog = async (req, res) => {
+    
+        const viewKey = `blog:${req.params.id}`;
+        console.log("Increasing Redis view count...");
+        redisClient.hincrby(viewKey,"views",1,(err,views)=>{
+            if(err){
+                console.log("redis error:", err);
+                
+            }else{
+                console.log("current views:", views);
+                
+            }
+        })
     try {
 
         const blog = await blogModel.findById(req.params.id);
@@ -98,9 +112,7 @@ exports.showBlog = async (req, res) => {
 };
 
 
-// =====================
-// Update Blog
-// =====================
+
 exports.updateBlog = async (req, res) => {
 
     try {
@@ -130,7 +142,8 @@ exports.updateBlog = async (req, res) => {
         blog.author = req.body.author;
 
         await blog.save();
-        blogCache = null;
+         redisClient.del("blogs")
+       
         res.status(200).json({
             message: "Blog Updated Successfully"
         });
@@ -148,16 +161,14 @@ exports.updateBlog = async (req, res) => {
 };
 
 
-// =====================
-// Delete Blog
-// =====================
+
 exports.deleteBlog = async(req,res)=>{
 
     try{
 
         const blog = await blogModel.findByIdAndDelete(req.params.id);
+ redisClient.del("blogs")
 
-        blogCache = null;
 
         if(blog){
 
@@ -183,4 +194,16 @@ exports.deleteBlog = async(req,res)=>{
 
     }
 
+}
+
+exports.likeBlog = async(req,res)=>{
+    const blogId = req.params.id;
+    const user = req.body.user;
+
+    redisClient.sadd(`likes:${blogId}`,user,(err,result)=>{
+        if(err){
+            return res.status(500).json({message: "redis error"})
+        }
+        res.status(200).json({message: "liked",added: result})
+    })
 }

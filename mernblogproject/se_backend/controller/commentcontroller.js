@@ -1,4 +1,5 @@
 
+const redisClient = require('../redis')
 const commentModel = require("../model/commentmodel")
 const {getIO} = require("../socket")
 
@@ -11,6 +12,8 @@ exports.addComment = async(req,res)=>{
         })
         const io = getIO()
         io.to(comment.blog.toString()).emit("newComment",comment)
+        redisClient.lpush(`comments:${comment.blog}`,JSON.stringify(comment))
+        redisClient.ltrim(`comments:${comment.blog}`,0,9)
         res.status(201).json(comment)
     } catch (error) {
         console.log(error);
