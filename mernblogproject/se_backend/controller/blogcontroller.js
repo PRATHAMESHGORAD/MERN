@@ -85,6 +85,7 @@ exports.showBlog = async (req, res) => {
                 
             }
         })
+        redisClient.zincrby("trendingBlogs",1,req.params.id)
     try {
 
         const blog = await blogModel.findById(req.params.id);
@@ -202,8 +203,20 @@ exports.likeBlog = async(req,res)=>{
 
     redisClient.sadd(`likes:${blogId}`,user,(err,result)=>{
         if(err){
+            console.log(err);
+            
             return res.status(500).json({message: "redis error"})
         }
         res.status(200).json({message: "liked",added: result})
+    })
+}
+
+
+exports.trendingBlogs = (req,res)=>{
+    redisClient.zrevrange("trendingBlogs",0,4,"WITHSCORES",(err,result)=>{
+        if(err){
+            return res.status(500).json({message: "redis error"})
+        }
+        res.status(200).json(result)
     })
 }
