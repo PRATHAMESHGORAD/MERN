@@ -7,7 +7,7 @@ const {intializeSocket} = require('./socket');
 const redisClient = require("./redis")
 const errorHandler = require('./middleware/errorHandler');
 const AppError = require('./utils/AppError')
-
+require("dotenv").config();
 
 
 const { connectDB } = require('./db');
@@ -15,7 +15,7 @@ const { connectDB } = require('./db');
 const blogRouter = require('./routes/blogroute');
 const userRouter = require('./routes/userroute');
 const commentRouter = require('./routes/commentroute')
-
+const paymentRouter = require('./routes/paymentRoute');
 const app = express();
 
 connectDB();
@@ -40,7 +40,7 @@ app.use('/user', userRouter);
 app.use('/blog', blogRouter);
 
 app.use('/comment',commentRouter)
-
+app.use("/payment",paymentRouter)
 app.all("/{*any}",(req,res,next)=>{
     next(new AppError("Route not found",404))
 })

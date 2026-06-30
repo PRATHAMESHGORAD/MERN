@@ -8,7 +8,7 @@ import Edit from './component/Edit'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Register from './component/Register'
 import Login from './component/Login'
-
+import Premium from './component/Premium'
 
 const App = () => {
   return (
@@ -22,6 +22,7 @@ const App = () => {
       <Route path='/edit/:id' element={<Edit/>}/>
       <Route path='/register' element={<Register/>}/>
       <Route path='/login' element={<Login/>}/>
+      <Route path='/premium' element={<Premium/>}/>
     </Routes>
     </BrowserRouter>
     </>
