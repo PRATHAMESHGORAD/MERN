@@ -1,7 +1,8 @@
 const blogModel = require("../model/blogmodel");
 const {getIO} = require('../socket');//Because this controller needs access to the Socket.io server.
 const redisClient = require("../redis")
-
+const asyncHandler = require("../utils/asyncHandler")
+const AppError = require ("../utils/AppError")
 exports.addBlog = async (req, res) => {
 
     try {
@@ -72,46 +73,15 @@ exports.showblogs = async(req,res)=>{
 }
 
 
-exports.showBlog = async (req, res) => {
-    
-        const viewKey = `blog:${req.params.id}`;
-        console.log("Increasing Redis view count...");
-        redisClient.hincrby(viewKey,"views",1,(err,views)=>{
-            if(err){
-                console.log("redis error:", err);
-                
-            }else{
-                console.log("current views:", views);
-                
-            }
-        })
-        redisClient.zincrby("trendingBlogs",1,req.params.id)
-    try {
-
+exports.showBlog = asyncHandler(
+    async(req,res)=>{
         const blog = await blogModel.findById(req.params.id);
-
-        if (!blog) {
-
-            return res.status(404).json({
-                message: "Blog not found"
-            });
-
+        if(!blog){
+            throw new AppError("Blog not found",404)
         }
-
-        res.status(200).json(blog);
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(500).json({
-            message: "Server Error"
-        });
-
+        res.json(blog)
     }
-
-};
-
+)
 
 
 exports.updateBlog = async (req, res) => {

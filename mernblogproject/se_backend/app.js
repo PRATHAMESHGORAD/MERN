@@ -5,7 +5,8 @@ const http = require('http');
 
 const {intializeSocket} = require('./socket');
 const redisClient = require("./redis")
-
+const errorHandler = require('./middleware/errorHandler');
+const AppError = require('./utils/AppError')
 
 
 
@@ -40,6 +41,10 @@ app.use('/blog', blogRouter);
 
 app.use('/comment',commentRouter)
 
+app.all("/{*any}",(req,res,next)=>{
+    next(new AppError("Route not found",404))
+})
+app.use(errorHandler)
 
 //create http server
 const server = http.createServer(app);//it attaches to http server that is why we create
