@@ -12,7 +12,9 @@ const Premium = () => {
             description: "PREMIUM MEMBERSHIP",
             order_id : data.id,
             handler: function(response){
-                console.log(response)
+                const result = await axios.post("http://localhost:2000/payment/verify-payment",response)
+                console.log(result.data);
+                
             },
             theme:{
                 color: "#3399cc"
