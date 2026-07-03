@@ -18,19 +18,8 @@ const Login = () => {
         axios.post('http://localhost:2000/user/login', user,{
             withCredentials:true
         })
-            .then((res)=>{
-
- localStorage.setItem(
-
-   "token",
-
-   res.data.token
-
- );
-
- navigate("/");
-
-})
+            .then((res)=>{localStorage.setItem("token",res.data.token);
+                navigate("/");})
             .catch((err) => {
                 console.log(err)
                 alert("Login Failed")
@@ -108,6 +97,8 @@ const Login = () => {
             </div>
         </div>
     )
+
+    
 }
 
 export default Login

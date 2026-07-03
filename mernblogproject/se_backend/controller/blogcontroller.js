@@ -15,7 +15,7 @@ exports.addBlog = async (req, res) => {
             author: req.body.author,
 
             // Logged in user becomes owner
-            user: req.session.userId
+            user: req.user.id
 
         });
 
@@ -99,7 +99,7 @@ exports.updateBlog = async (req, res) => {
         }
 
         // Owner Check
-        if (blog.user.toString() !== req.session.userId) {
+        if (blog.user.toString() !== req.user.id) {
 
             return res.status(403).json({
                 message: "Access Denied"
@@ -133,43 +133,31 @@ exports.updateBlog = async (req, res) => {
 
 
 
-exports.deleteBlog = async(req,res)=>{
+const blog = await blogModel.findById(req.params.id);
 
-    try{
-
-        const blog = await blogModel.findByIdAndDelete(req.params.id);
- redisClient.del("blogs")
-
-
-        if(blog){
-
-            return res.status(200).json({
-                message:"Deleted"
-            });
-
-        }
-
-        res.status(404).json({
-            message:"Blog Not Found"
-        });
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-        res.status(500).json({
-            message:"Delete Failed"
-        });
-
-    }
-
+if(!blog){
+    return res.status(404).json({
+        message:"Blog Not Found"
+    });
 }
+
+if(blog.user.toString() !== req.user.id){
+    return res.status(403).json({
+        message:"Access Denied"
+    });
+}
+
+await blog.deleteOne();
+
+redisClient.del("blogs");
+
+return res.status(200).json({
+    message:"Deleted"
+});
 
 exports.likeBlog = async(req,res)=>{
     const blogId = req.params.id;
-    const user = req.body.user;
+    const user = req.user.id;
 
     redisClient.sadd(`likes:${blogId}`,user,(err,result)=>{
         if(err){

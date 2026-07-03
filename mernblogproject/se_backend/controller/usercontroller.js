@@ -1,6 +1,6 @@
 const userModel = require("../model/usermodel");
 const bcryptjs = require("bcryptjs");
-
+const jwt = require("jsonwebtoken");
 // Register
 exports.register = async (req, res) => {
     try {
@@ -13,13 +13,7 @@ exports.register = async (req, res) => {
             email,
             password: hashpassword
         });
-        {
-            req.session.userId =
-   user._id;
-
-   req.session.role =
-   user.role;
-        }
+        
 
         res.status(201).json({
             message: "User Registered Successfully"
@@ -44,12 +38,22 @@ exports.login = async (req, res) => {
         if (
             user &&
             await bcryptjs.compare(password, user.password)
-        ) req.session.userId = user._id;
-req.session.role = user.role;
+        ) {
+        const token = jwt.sign(
+    {
+        id: user._id,
+        role: user.role
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: "1h"
+    }
+);
 
 return res.status(200).json({
-    message:"Login Successful"
-});
+    message:"Login Successful",
+    token: token
+});}
 
         res.status(401).json({
             message: "Invalid Credentials"
@@ -62,9 +66,9 @@ return res.status(200).json({
 
 // Logout
 exports.logout = (req, res) => {
-    req.session.destroy(() => {
+    
         res.status(200).json({
             message: "Logout Successful"
         });
-    });
+    
 };

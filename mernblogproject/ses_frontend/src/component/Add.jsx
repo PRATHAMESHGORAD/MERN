@@ -12,7 +12,9 @@ const Add = () => {
         console.log(blog);
         
         axios.post('http://localhost:2000/blog/add',blog,{
-            withCredentials:true
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         })
         .then((res)=>{ console.log(res.data);
               navigate('/')})

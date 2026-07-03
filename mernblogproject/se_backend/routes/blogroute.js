@@ -5,11 +5,11 @@ const adminonly = require('../middleware/adminonly');
 
 const router = express.Router()
 
-router.post("/add",addBlog)
+router.post("/add",auth,addBlog)
 router.get("/",showblogs)
 router.get("/showBlog/:id",showBlog)
-router.put("/updateBlog/:id",updateBlog)
-router.delete("/deleteBlog/:id",deleteBlog)
+router.put("/updateBlog/:id",auth,updateBlog)
+router.delete("/deleteBlog/:id",auth,deleteBlog)
 router.post("/like/:id",likeBlog)
 router.get("/trending",trendingBlogs)
 
