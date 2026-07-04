@@ -133,7 +133,11 @@ exports.updateBlog = async (req, res) => {
 
 
 
-const blog = await blogModel.findById(req.params.id);
+exports.deleteBlog = async(req,res)=>{
+
+    try{
+
+        const blog = await blogModel.findById(req.params.id);
 
 if(!blog){
     return res.status(404).json({
@@ -154,6 +158,19 @@ redisClient.del("blogs");
 return res.status(200).json({
     message:"Deleted"
 });
+    }
+
+    catch(error){
+
+        console.log(error);
+
+        res.status(500).json({
+            message:"Delete Failed"
+        });
+
+    }
+
+}
 
 exports.likeBlog = async(req,res)=>{
     const blogId = req.params.id;
