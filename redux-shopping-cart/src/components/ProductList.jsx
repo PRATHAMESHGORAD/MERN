@@ -4,8 +4,8 @@ import { addToCart } from "../features/cart/cartSlice"
 const ProductList = () => {
     const dispatch = useDispatch()
     const products = [
-        {id:1,name:"iphone",price:80000},
-        {id:2,name:"laptop",price:60000},
+        {id:1,name:"iphone",price:80000,quantity:1},
+        {id:2,name:"laptop",price:60000,quantity:1},
 
     ]
   return (
@@ -17,6 +17,7 @@ const ProductList = () => {
             <div key={product.id}>
                 <h3>{product.name}</h3>
                 <p>{product.price}</p>
+                <p>{product.quantity}</p>
                 <button
                 onClick={()=>dispatch(addToCart(product))}>
                     addtocart
