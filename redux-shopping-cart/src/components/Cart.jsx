@@ -23,7 +23,8 @@ const Cart = () => {
       }
     </div>
   )
-}
+}//mew things
+
 
 export default Cart
 
