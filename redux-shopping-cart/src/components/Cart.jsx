@@ -24,7 +24,7 @@ const Cart = () => {
     </div>
   )
 }//mew things
-
+//every same thing
 
 export default Cart
 
