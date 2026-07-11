@@ -5,6 +5,7 @@ import { removeFromCart } from '../features/cart/cartSlice'
 const Cart = () => {
     const items = useSelector((state)=>state.cart.items)
     const dispatch = useDispatch()
+    
   return (
     <div>
       <h2>cart</h2>
@@ -25,6 +26,7 @@ const Cart = () => {
   )
 }//mew things
 //every same thing
+//renewal theory 
 
 export default Cart
 
