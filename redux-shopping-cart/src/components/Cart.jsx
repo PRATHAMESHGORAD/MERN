@@ -27,6 +27,8 @@ const Cart = () => {
 }//mew things
 //every same thing
 //renewal theory 
+//rational theroyie allongwith depednies
+
 
 export default Cart
 
