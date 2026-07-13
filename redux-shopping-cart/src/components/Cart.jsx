@@ -28,7 +28,7 @@ const Cart = () => {
 //every same thing
 //renewal theory 
 //rational theroyie allongwith depednies
-
+//remotively
 
 export default Cart
 
