@@ -45,3 +45,4 @@ export const fetchProducts = createAsyncThunk(
 )
 export const {addToCart,removeFromCart} = cartSlice.actions
 export default cartSlice.reducer;
+//evel donw
