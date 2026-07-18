@@ -47,3 +47,4 @@ export const {addToCart,removeFromCart} = cartSlice.actions
 export default cartSlice.reducer;
 //evel donw
 //revolt
+//life regret
