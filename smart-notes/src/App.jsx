@@ -1,7 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useRef} from 'react'
 function App() {
+  const [title,setTitle] = useState("");
+  const [notes,setNotes] = useState([])
   const inputRef = useRef(null);
+  const handleAddNote = () => {
+    setNotes([...notes,title]);
+    setTitle("")
+  }
   useEffect(()=>{
     inputRef.current.focus()
   },[])
@@ -15,6 +21,5 @@ function App() {
     </div>
   )
 }
-//reverse
-//gordan
+
 export default App
