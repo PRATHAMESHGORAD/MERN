@@ -1,15 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const connectDB = ()=>{
-    mongoose.connect("mongodb://localhost:27017/mernproject")
-    .then(() => {
-       console.log("connected");
-        
-    }).catch((err) => {
-        console.log(err);
-        
-    });
+const connectDB = () => {
+    mongoose.connect("mongodb://mongodb:27017/mernproject")
+        .then(() => {
+            console.log("MongoDB Connected");
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
 
-}
-
-module.exports = {connectDB}
+module.exports = { connectDB };
