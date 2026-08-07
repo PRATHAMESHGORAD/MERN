@@ -11,8 +11,4 @@ client.on("error", (err) => {
 });
 
 module.exports = client;//doted wokr
-//little
-//worked
-//smarted
-//rewrades
-//goteed
+//located thorught he negotiate don the tables
