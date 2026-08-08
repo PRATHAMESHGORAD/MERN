@@ -12,3 +12,4 @@ client.on("error", (err) => {
 
 module.exports = client;//doted wokr
 //located thorught he negotiate don the tables
+//dleted workded doned 
