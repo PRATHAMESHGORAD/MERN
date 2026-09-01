@@ -11,16 +11,4 @@ const connectDB = () => {
 };
 
 module.exports = { connectDB };//merged values 
-//added
-//hard
-//devoned
-//added
-//git
-//remove
-//log
-//give
-//romen
-//reded
-//git
-//gone
-//red riot
+//rock
