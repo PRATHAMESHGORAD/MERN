@@ -56,8 +56,4 @@ server.listen(2000, () => {
     console.log(" server running");
 });
 //allowed
-//sene
-//all for one
-//tdrac
-//reded
-//slashed
+//retro
