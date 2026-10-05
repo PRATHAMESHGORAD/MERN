@@ -57,12 +57,4 @@ server.listen(2000, () => {
 });
 //allowed
 //retro
-//ligament
-//req
-//levonder
-//logo
-//lash
-//retro
-//ls
-//roger
-//lgoer
+//added
