@@ -56,13 +56,5 @@ server.listen(2000, () => {
     console.log(" server running");
 });
 //allowed
-//retro
-//added
-//git 
-//slashed
-//theory
-//egalu
-//molani
-//logan
-//rodri
+//quality
 
