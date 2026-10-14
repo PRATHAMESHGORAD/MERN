@@ -68,7 +68,7 @@ const Login = () => {
                                         onChange={(e) =>
                                             setUser({
                                                 ...user,
-                                                password: e.target.value
+                                                password: e.target.value    //password
                                             })
                                         }
                                     />
