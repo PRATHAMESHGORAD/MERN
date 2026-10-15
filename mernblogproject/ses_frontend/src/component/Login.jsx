@@ -69,6 +69,7 @@ const Login = () => {
                                             setUser({
                                                 ...user,
                                                 password: e.target.value    //password
+                                                                            
                                             })
                                         }
                                     />
@@ -78,9 +79,9 @@ const Login = () => {
                                     type="submit"
                                     className="btn btn-primary w-100"
                                 >
-                                    Login
-                                </button>
-
+                                    Login                                     
+                                </button>        //login
+                       
                             </form>
 
                             <p className="mt-3 text-center">
