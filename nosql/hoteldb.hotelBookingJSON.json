@@ -1,0 +1,79 @@
+[{
+  "_id": {
+    "$oid": "6adf0aa51e8824d6ca9f64db"
+  },
+  "reservationId": "HR101",
+  "guestName": "Rahul Sharma",
+  "guestEmail": "rahul@gmail.com",
+  "guestPhone": "9876543210",
+  "hotelId": "HTL101",
+  "hotelName": "Grand Palace Hotel",
+  "city": "Mumbai",
+  "starRating": 5,
+  "roomType": "Deluxe",
+  "roomNumber": 305,
+  "bedType": "King",
+  "numberOfGuests": 2,
+  "numberOfNights": 3,
+  "bookingDate": "2026-10-15",
+  "checkInDate": "2026-10-20",
+  "checkOutDate": "2026-10-23",
+  "pricePerNight": 4500,
+  "totalAmount": 13500,
+  "reservationStatus": "Confirmed",
+  "paymentStatus": "Paid",
+  "paymentMethod": "UPI",
+  "breakfastIncluded": true,
+  "guest": {
+    "guestId": "GST101",
+    "age": 28,
+    "membership": "Gold",
+    "idProof": "Aadhaar"
+  },
+  "hotelAddress": {
+    "street": "Marine Drive",
+    "area": "Churchgate",
+    "pincode": "400020",
+    "contactNumber": "02212345678"
+  },
+  "payment": {
+    "transactionId": "TXN501",
+    "amount": 13500,
+    "currency": "INR",
+    "paymentMethod": "UPI"
+  },
+  "amenities": [
+    "Free WiFi",
+    "Swimming Pool",
+    "Parking",
+    "Gym"
+  ],
+  "specialRequests": [
+    "Late check-in",
+    "Sea-facing room"
+  ],
+  "additionalServices": [
+    {
+      "serviceId": "SRV101",
+      "serviceName": "Airport Pickup",
+      "price": 1200
+    },
+    {
+      "serviceId": "SRV102",
+      "serviceName": "Spa Session",
+      "price": 2500
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6adf0b681e8824d6ca9f64dc"
+  },
+  "reservationId": "HR501",
+  "guestName": "Neha Joshi",
+  "hotelName": "Grand Palace Hotel",
+  "roomType": "Deluxe",
+  "nights": 2,
+  "amount": 9000,
+  "status": "Confirmed"
+}]

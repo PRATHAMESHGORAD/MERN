@@ -1,0 +1,11 @@
+[
+  {
+    "reservationId": "HR501",
+    "guestName": "Neha Joshi",
+    "hotelName": "Grand Palace Hotel",
+    "roomType": "Deluxe",
+    "nights": 2,
+    "amount": 9000,
+    "status": "Confirmed"
+  }
+]
