@@ -1,0 +1,42 @@
+{
+    "reservationid":"hr101",
+    "guestname":"rahul sharma",
+    "guestemail":"rahulsharma@gmail.com",
+    "guestphoneno":929393838,
+    "hotelid":"h1",
+    "hotelname":"taj mahal",
+    "city":"mumbai",
+    "roomtype":"deluxe",
+    "roomno":305,
+    "bedtype":"king",   
+    "numberguest":2,
+    "numberofnights":3,
+    "bookingdate":"2026-05-19",
+    "checkindate":"2026-05-21",
+    "checkoutdate":"2026-05-23",
+    "pricepernight": 3000,
+    "totalamount": 15000,
+    "reservationstatus":"confirm",
+    "paymentstatus":"paid",
+    "paymentmethod":"upi",
+    "guest":{
+        "guestid":101,
+        "age":28,
+        "membership":"gold"
+    },
+    "hoteladdress":{
+        "street":"vproad",
+        "area":"churchgate",
+        "pincode":400101
+    },
+    "payment":{
+        "amount":13000,
+        "currency":"INR",
+        "method":"upi"
+    },
+    "amentities":[
+        "free wifi",
+        "gym"
+    ]
+
+}

@@ -1,0 +1,16 @@
+[{
+  "_id": {
+    "$oid": "6ae776e732c78ef37ab5f899"
+  },
+  "hotelid": "h1",
+  "hotelname": "bhojnalay",
+  "city": "mumbai"
+},
+{
+  "_id": {
+    "$oid": "6ae7775832c78ef37ab5f89b"
+  },
+  "hotelid": "h2",
+  "hotelname": "lake",
+  "city": "mumbai"
+}]
