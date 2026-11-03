@@ -24,3 +24,4 @@ fetch("hotel1.json")
     document.getElementById("amentities").innerHTML = data.amentities.join(", ");
     
   });
+  //scalibe
