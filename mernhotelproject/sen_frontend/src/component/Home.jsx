@@ -95,9 +95,4 @@ const Home = () => {
 
 export default Home
 //redble
-//red
-//limnition
-//worker
-//rewok
-//roler
-//remid
+//writer
