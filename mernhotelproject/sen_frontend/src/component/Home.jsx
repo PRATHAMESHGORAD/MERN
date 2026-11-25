@@ -94,13 +94,4 @@ const Home = () => {
 }
 
 export default Home
-//redble
-//writer
-//wrote
-//romen
-//toger
-//writer
-//guan
-//kio
-//lost
-//looser
+//resident
