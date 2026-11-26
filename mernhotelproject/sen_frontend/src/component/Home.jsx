@@ -95,3 +95,4 @@ const Home = () => {
 
 export default Home
 //resident
+//hogwarts the remeber the hole 
